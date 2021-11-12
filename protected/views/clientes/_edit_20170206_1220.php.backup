@@ -1,0 +1,105 @@
+<?php $form=$this->beginWidget('bootstrap.widgets.TbActiveForm',array(
+	'id'=>'search-clientes-form',
+	'type'=>'horizontal',
+	'enableAjaxValidation'=>true,
+	'focus'=>array($model,'dato'),
+)); ?>
+
+
+
+<script>
+		
+	checkRepeat = function (e) {
+		
+		var str = $(e).val();
+	    
+	    var repeats = /(\w)\1\1\1+/;
+	    
+	    var res = repeats.test(str);
+	    
+	    //console.log(res);
+	    
+	    if (res) {	    	
+	    
+	    	//console.log(str);
+	    	var str2 = str.substring(0, str.length - 1)	    	
+	    	//console.log(str2);
+	    
+	    	$(e).val(str2);
+	    	
+	    	$('#Clientes_dato_em_').html('Ingreso mas de 4 caracteres repetidos.');
+	    	$('#Clientes_dato_em_').show();
+		} else {
+	    	$('#Clientes_dato_em_').html('');
+	    	$('#Clientes_dato_em_').hide();			
+		}
+		
+		
+	    return true;	    
+	}
+	
+</script>
+
+
+	
+
+
+
+	<?php //echo $form->errorSummary($model); ?>
+
+		<!-- disables autocomplete -->
+		<input type="text" style="display:none">		
+		
+		<?php echo $form->textFieldRow($model,'dato',array('class'=>'span5','maxlength'=>150,'onkeypress'=>'return checkRepeat (this)','required'=>true,'autocomplete'=>'off')); ?>
+			
+				
+		<?php $this->widget('bootstrap.widgets.TbButton', array(
+			'buttonType'=>'submit',
+			'type'=>'primary',
+			'label'=>'Buscar',
+			'icon'=>'icon-search icon-white',
+			//'htmlOptions'=>array('onclick'=>'javascript:window.parent.$("#cru_dialog").dialog("close");',)
+		)); ?>
+		
+		<?php echo $form->hiddenField($model,'id_cliente',array('value'=>$id_cliente)); ?>
+		<?php echo $form->hiddenField($model,'field'); ?>
+		<?php echo $form->hiddenField($model,'asDialog'); ?>
+
+
+		
+<?php $this->endWidget(); ?>
+		
+
+
+<script>
+/*	
+$("#Clientes_dato").bind("keypress keyup keydown", function (event) {  
+    var evtType = event.type;
+    var eWhich = event.which;
+    var echarCode = event.charCode;
+    var ekeyCode = event.keyCode;
+        
+    //var eWhich = event.which | event.keyCode;
+    
+    //if (eWhich < 48)
+    
+    //console.log(eWhich);
+    
+    switch (evtType) {
+        case 'keypress':
+            console.log(evtType + " keycode: " + ekeyCode + " charcode: " + echarCode + " which: " + eWhich);
+            break;
+        case 'keyup':
+            console.log(evtType + " keycode: " + ekeyCode + " charcode: " + echarCode + " which: " + eWhich);
+            break;
+        case 'keydown':
+            console.log(evtType + " keycode: " + ekeyCode + " charcode: " + echarCode + " which: " + eWhich);
+            break;
+        default:
+            break;
+    }
+});
+*/
+	
+</script>
+

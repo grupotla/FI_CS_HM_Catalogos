@@ -1,0 +1,143 @@
+<?php $form=$this->beginWidget('bootstrap.widgets.TbActiveForm',array(
+	'id'=>'direcciones-form',
+	'type'=>'horizontal',
+	/*
+	'enableClientValidation'=>true,
+	'clientOptions'=>array(
+		'validateOnSubmit'=>true,
+	),
+	*/
+	'enableAjaxValidation'=>false,	
+	'focus'=>array($model,'id_nivel_geografico'),
+)); ?>
+
+<script>
+
+
+	function ValidateString2(e) {
+		
+		
+
+		//var code = e.keyCode || e.which;
+		
+		//console.log($(e).keyCode);
+
+/*
+		var count = (str.match(/-/g) || []).length;
+
+		console.log("(" + count + ")");
+
+		if (count > 1)
+			return false;
+		else	
+		*/
+			return true;
+
+		
+		
+	}
+	
+	function ValidateString(str) {
+		
+		var no_valids = ['fax','tel','nit','phone',':','´'];
+		
+		var i, p; 
+		
+		for (i = 0; i < no_valids.length; ++i) {
+    		
+    		p = str.toLowerCase().indexOf(no_valids[i]);
+    		if (p > 0) {
+				str = str.substring(0,p) + str.substring(p+3,str.length);
+			}
+		}			
+		
+		return str;
+	}
+	
+</script>
+
+	<!-- <p class="help-block">Campos con <span class="required">*</span> son requeridos.</p> -->
+
+	<?php //echo $form->errorSummary($model); ?>
+
+	<?php //echo $form->dropDownListRow($model,'id_cliente',CHtml::listData(Clientes::model()->findAll(array("condition"=>"","order"=>"")),'id_cliente','codigo_tributario'), array('prompt' => '-- Seleccione --')); ?>
+
+	<?php echo $form->textFieldRow($model,'id_cliente',array('class'=>'input-small')); ?>
+
+	<?php echo $form->dropDownListRow($model,'id_nivel_geografico',CHtml::listData(NivelesGeograficos::model()->findAll(array("condition"=>"id_pais = '".$_REQUEST['id_pais']."'","order"=>"nivel1")),'id_nivel','nivel1'), array('prompt' => '-- Seleccione --')); ?>
+
+	<?php echo $form->textFieldRow($model,'phone_number',array('class'=>'span5','maxlength'=>100)); ?>
+	
+	<?php echo $form->textAreaRow($model,'direccion_completa',array('class'=>'span5','maxlength'=>250,'onkeyup'=>'this.value=ValidateString(this.value)','onkeydown'=>'ValidateString2(this)')); ?>
+
+	<?php echo $form->textAreaRow($model,'address',array('class'=>'span5','maxlength'=>250)); ?>
+
+	<?php echo $form->textFieldRow($model,'city',array('class'=>'span5','maxlength'=>35)); ?>
+
+	<?php echo $form->textFieldRow($model,'state',array('class'=>'span5','maxlength'=>35)); ?>
+
+	<?php echo $form->textFieldRow($model,'zipcode',array('class'=>'span5','maxlength'=>35)); ?>
+
+	<?php echo $form->textFieldRow($model,'name',array('class'=>'span5','maxlength'=>65)); ?>
+
+	<?php //echo $form->textFieldRow($model,'phone number',array('class'=>'span5','maxlength'=>100)); ?>
+	
+	<?php echo $form->textFieldRow($model,'group',array('class'=>'span5','maxlength'=>35)); ?>
+
+	<?php echo $form->textFieldRow($model,'url',array('class'=>'span5','maxlength'=>150)); ?>
+
+	<?php echo $form->textFieldRow($model,'image',array('class'=>'span5','maxlength'=>100)); ?>
+
+	<?php echo $form->textFieldRow($model,'lat',array('class'=>'span5')); ?>
+
+	<?php echo $form->textFieldRow($model,'lng',array('class'=>'span5')); ?>
+
+	<?php echo $form->textFieldRow($model,'email',array('class'=>'span5','maxlength'=>50)); ?>
+
+	<?php echo $form->dropDownListRow($model,'id_tipo_direccion',CHtml::listData(TipoDireccion::model()->findAll(array("condition"=>"","order"=>"")),'id_tipo_direccion','descripcion_tipo'), array('prompt' => '-- Seleccione --')); ?>
+
+	<?php echo $form->checkBoxRow($model,'boletines'); ?>
+
+	<?php echo $form->checkBoxRow($model,'activo'); ?>
+
+
+
+	<?php //ob_start(); ?>
+	<?php //$section1 = ob_get_contents(); ob_end_clean(); ?>
+		
+    <?php /*echo TbHtml::tabbableTabs(array(
+        array('label' => 'Datos Generales', 'content' => $section1, 'active' => true),
+    ), array('placement' => TbHtml::TABS_PLACEMENT_LEFT ) );*/ ?>
+
+
+<?php if (!$this->asDialog) : ?>
+
+	<div class="form-actions">
+
+		<?php $this->widget('bootstrap.widgets.TbButton', array(
+			'buttonType'=>'submit',
+			'type'=>'primary',
+			'label'=>$model->isNewRecord ? 'Create' : 'Save',
+		)); ?>
+	
+<?php /*else: ?>	
+	
+	<?php echo CHtml::ajaxSubmitButton($model->isNewRecord ? 'Create' : 'Save',$_SERVER['REQUEST_URI'],array(	
+				'update'=>'.modal-body',
+   				//'type'=>'POST','dataType'=>'json','beforeSend' => 'function(data){ }', 'success' => 'js:function(data){ }',
+            	'error' => 'function(data) {                   
+    	        	alert(data.responseText);
+	            }',
+            ),
+			array('style'=>'display:none'
+	)); */?>
+		
+	</div>
+<?php endif; ?>
+	
+
+
+<?php $this->endWidget(); ?>
+
+
+
